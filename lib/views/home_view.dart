@@ -5,9 +5,28 @@ import 'package:punto_de_venta_desktop/components/common/grid.dart';
 import 'package:punto_de_venta_desktop/components/common/search_button1.dart';
 import 'package:punto_de_venta_desktop/components/containers/big_container.dart';
 import 'package:punto_de_venta_desktop/components/containers/medium_container.dart';
+import 'package:punto_de_venta_desktop/components/containers/sales_container.dart';
 import 'package:punto_de_venta_desktop/components/default_button.dart';
+import 'package:punto_de_venta_desktop/config/theme/app_theme.dart';
+import 'package:punto_de_venta_desktop/models/sales_model.dart';
 
 void agregarVenta() {}
+
+class ContainerData {
+  final String subtitle;
+  final String title;
+  final Icon icon;
+  final String value;
+  final String unit;
+
+  ContainerData({
+    required this.subtitle,
+    required this.title,
+    required this.icon,
+    required this.value,
+    required this.unit,
+  });
+}
 
 List<DropdownMenuItem> ventas2 = [
   const DropdownMenuItem(value: 'Venta 1', child: Text('Venta 1')),
@@ -59,6 +78,54 @@ List<Widget> ventas = [
   ),
 ];
 
+final List<ContainerData> containerDataList = [
+  ContainerData(
+    subtitle: 'Productos Registrados 500',
+    title: 'Productos Valorizados',
+    icon: const Icon(Icons.shopping_cart),
+    value: '\$4,352.00',
+    unit: 'MXN',
+  ),
+  ContainerData(
+    subtitle: 'Ventas Realizadas: 214',
+    title: 'Ventas valorzadas',
+    icon: const Icon(Icons.shopping_cart),
+    value: 'Value 2',
+    unit: 'Unit 2',
+  ),
+  ContainerData(
+    subtitle: 'Productos en stock: 5,647',
+    title: 'Almacén valorzado',
+    icon: const Icon(Icons.warehouse),
+    value: '\$35,000',
+    unit: 'MXN',
+  ),
+  ContainerData(
+    subtitle: '',
+    title: 'Clientes',
+    icon: const Icon(Icons.person),
+    value: '2,000',
+    unit: '',
+  ),
+];
+
+final List<SalesData> salesDataList = [
+  SalesData(
+      title: "Venta del día",
+      value: "\$20,000",
+      unit: "MXN",
+      date: "12/04/2024"),
+  SalesData(
+      title: "Venta de la semana",
+      value: "\$100,000",
+      unit: "MXN",
+      date: "12/04/2024 - 18/04/2024"),
+  SalesData(
+      title: "Venta del mes", value: "\$500,000", unit: "MXN", date: "Abril"),
+  SalesData(
+      title: "Venta del año", value: "\$1,000,000", unit: "MXN", date: "2024"),
+];
+
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
@@ -80,7 +147,7 @@ class HomeView extends StatelessWidget {
                   onPressed: agregarVenta),
             ],
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.015),
           BigContainer(
               child: Column(
             children: [
@@ -93,16 +160,15 @@ class HomeView extends StatelessWidget {
               ),
               Row(
                 children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 25, 0),
-                      child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.20,
-                        child: GridWidget(
-                          widgets: ventas,
-                          crossAxisCount: 5,
-                          aspectRatio: MediaQuery.of(context).size.height * 0.0025,
-                        ),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.17,
+                      child: GridWidget(
+                        widgets: ventas,
+                        crossAxisCount: 5,
+                        aspectRatio:
+                            MediaQuery.of(context).size.height * 0.0025,
                       ),
                     ),
                   ),
@@ -119,7 +185,7 @@ class HomeView extends StatelessWidget {
               )
             ],
           )),
-          const SizedBox(height: 20),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
           BigContainer(
               child: Column(
             children: [
@@ -130,18 +196,70 @@ class HomeView extends StatelessWidget {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 ],
               ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Row(
                 children: [
-                  SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.20,
-                      width: MediaQuery.of(context).size.width * 0.30,
-                      child: const MediumContainer(
-                        value: '\$4,352.00',
-                        unit: 'MXN',
-                        title: 'Productos Valorizados',
-                        icon: Icon(Icons.shopping_cart),
-                        subtitle: 'Productos Registrados 500',
-                      )),
+                  Expanded(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.18,
+                      child: GridWidget(
+                        widgets: containerDataList
+                            .map((e) => MediumContainer(
+                                  title: e.title,
+                                  subtitle: e.subtitle,
+                                  icon: e.icon,
+                                  value: e.value,
+                                  unit: e.unit,
+                                ))
+                            .toList(),
+                        crossAxisCount: 4,
+                        aspectRatio:
+                            MediaQuery.of(context).size.height * 0.0020,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, MediaQuery.of(context).size.width * 0.005, 0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.37,
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      decoration: BoxDecoration(
+                        color: AppColors.defaultGreyColor,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Gráficas',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      child: GridWidget(
+                        widgets: salesDataList
+                            .map((e) => SalesContainer(
+                                title: e.title,
+                                value: e.value,
+                                unit: e.unit,
+                                date: e.date))
+                            .toList(),
+                        crossAxisCount: 2,
+                        aspectRatio:
+                            MediaQuery.of(context).size.height * 0.0026,
+                      ),
+                    ),
+                  ),
                 ],
               )
             ],
