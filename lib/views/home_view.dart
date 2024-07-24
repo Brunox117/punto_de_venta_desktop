@@ -10,7 +10,6 @@ import 'package:punto_de_venta_desktop/components/default_button.dart';
 import 'package:punto_de_venta_desktop/config/theme/app_theme.dart';
 import 'package:punto_de_venta_desktop/models/sales_model.dart';
 
-void agregarVenta() {}
 
 class ContainerData {
   final String subtitle;
@@ -88,10 +87,10 @@ final List<ContainerData> containerDataList = [
   ),
   ContainerData(
     subtitle: 'Ventas Realizadas: 214',
-    title: 'Ventas valorzadas',
+    title: 'Ventas valorizadas',
     icon: const Icon(Icons.shopping_cart),
-    value: 'Value 2',
-    unit: 'Unit 2',
+    value: '\$ 10,000',
+    unit: 'MXN',
   ),
   ContainerData(
     subtitle: 'Productos en stock: 5,647',
@@ -132,19 +131,19 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Dashboard',
+              const Text('Dashboard',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
               DefaultButton(
                   icon: Icons.add_circle,
                   title: 'Nueva venta',
-                  onPressed: agregarVenta),
+                  onPressed: () {}),
             ],
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.015),
@@ -160,26 +159,24 @@ class HomeView extends StatelessWidget {
               ),
               Row(
                 children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                  Expanded(
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.17,
-                      child: GridWidget(
-                        widgets: ventas,
-                        crossAxisCount: 5,
-                        aspectRatio:
-                            MediaQuery.of(context).size.height * 0.0025,
-                      ),
-                    ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                  GridWidget(
+                    height: MediaQuery.of(context).size.height * 0.17,
+                    widgets: ventas,
+                    crossAxisCount: 5,
+                    aspectRatio: MediaQuery.of(context).size.height * 0.0025,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SearchButton1(onPressed: () {}),
-                      SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.09),
-                      DeleteButton1(onPressed: () {}),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(4, 0, 0, 0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SearchButton1(onPressed: () {}),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.09),
+                        DeleteButton1(onPressed: () {}),
+                      ],
+                    ),
                   ),
                 ],
               )
@@ -199,24 +196,19 @@ class HomeView extends StatelessWidget {
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Row(
                 children: [
-                  Expanded(
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.18,
-                      child: GridWidget(
-                        widgets: containerDataList
-                            .map((e) => MediumContainer(
-                                  title: e.title,
-                                  subtitle: e.subtitle,
-                                  icon: e.icon,
-                                  value: e.value,
-                                  unit: e.unit,
-                                ))
-                            .toList(),
-                        crossAxisCount: 4,
-                        aspectRatio:
-                            MediaQuery.of(context).size.height * 0.0020,
-                      ),
-                    ),
+                  GridWidget(
+                    height: MediaQuery.of(context).size.height * 0.18,
+                    widgets: containerDataList
+                        .map((e) => MediumContainer(
+                              title: e.title,
+                              subtitle: e.subtitle,
+                              icon: e.icon,
+                              value: e.value,
+                              unit: e.unit,
+                            ))
+                        .toList(),
+                    crossAxisCount: 4,
+                    aspectRatio: MediaQuery.of(context).size.height * 0.0020,
                   ),
                 ],
               ),
@@ -224,7 +216,8 @@ class HomeView extends StatelessWidget {
               Row(
                 children: [
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, MediaQuery.of(context).size.width * 0.005, 0),
+                    padding: EdgeInsets.fromLTRB(
+                        0, 0, MediaQuery.of(context).size.width * 0.005, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.37,
                       height: MediaQuery.of(context).size.height * 0.3,
@@ -243,22 +236,17 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      child: GridWidget(
-                        widgets: salesDataList
-                            .map((e) => SalesContainer(
-                                title: e.title,
-                                value: e.value,
-                                unit: e.unit,
-                                date: e.date))
-                            .toList(),
-                        crossAxisCount: 2,
-                        aspectRatio:
-                            MediaQuery.of(context).size.height * 0.0026,
-                      ),
-                    ),
+                  GridWidget(
+                    height: MediaQuery.of(context).size.height * 0.3,
+                    widgets: salesDataList
+                        .map((e) => SalesContainer(
+                            title: e.title,
+                            value: e.value,
+                            unit: e.unit,
+                            date: e.date))
+                        .toList(),
+                    crossAxisCount: 2,
+                    aspectRatio: MediaQuery.of(context).size.height * 0.0026,
                   ),
                 ],
               )
